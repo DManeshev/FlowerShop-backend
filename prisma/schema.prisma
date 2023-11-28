@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("create_at")
+  updatedAt DateTime @updatedAt @map("update_at")
+
+  email      String  @unique
+  password   String
+  isAdmin    Boolean @default(false) @map("is_admin")
+  name       String  @unique
+  avatarPath String  @default("/uploads/default-avatar.png") @map("avatar_path")
+  phone      String  @default("")
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("create_at")
+  updatedAt DateTime @updatedAt @map("update_at")
+
+  name        String
+  slug        String   @unique
+  description String?
+  price       Int
+  images      String[]
+  isDelivery  Boolean  @default(false) @map("is_delivery")
+  categoryId  Int?     @map("category_id")
+
+  status EnumProductStatus @default(inStock)
+
+  orderItems OrderItem[]
+
+  category Category? @relation(fields: [categoryId], references: [id])
+
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+  subcategoryId Int?         @map("subcategory_id")
+
+  flowers Flower[] @relation("FlowerToProduct")
+}
+
+model Flower {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  products Product[] @relation("FlowerToProduct")
+}
+
+model Category {
+  id       Int      @id @default(autoincrement())
+  createAt DateTime @default(now()) @map("create_at")
+
+  name String @unique
+  slug String @unique
+  icon String
+  image String @default("")
+
+  products Product[]
+
+  subCategories Subcategory[]
+}
+
+model Subcategory {
+  id Int @id @default(autoincrement())
+
+  name  String @unique
+  slug  String @unique
+  icon  String
+  image String @default("")
+
+  products Product[]
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int      @map("category_id")
+}
+
+model Order {
+  id           Int             @id @default(autoincrement())
+  createdAt    DateTime        @default(now()) @map("create_at")
+  updatedAt    DateTime        @updatedAt @map("update_at")
+  status       EnumOrderStatus @default(PENDING)
+  total        Int
+  commentary   String
+  delivery     String
+  deliveryDate String          @map("delivery_date")
+  deliveryTime String          @map("delivery_time")
+  name         String
+  phone        String
+  items        OrderItem[]
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("create_at")
+  updatedAt DateTime @updatedAt @map("update_at")
+  quantity  Int
+  price     Int
+  orderId   Int?     @map("order_id")
+  productId Int?     @map("product_id")
+  order     Order?   @relation(fields: [orderId], references: [id])
+  product   Product? @relation(fields: [productId], references: [id])
+}
+
+enum EnumProductStatus {
+  inStock
+  outStock
+  customMade
+}
+
+enum EnumOrderStatus {
+  PENDING
+  PAYED
+  SHIPPED
+  DELIVERED
+}
