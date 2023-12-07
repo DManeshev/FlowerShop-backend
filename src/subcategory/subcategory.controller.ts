@@ -28,6 +28,10 @@ export class SubcategoryController {
 		return this.subcategoryService.getByCategory(+id)
 	}
 
+	@Get('by-slug/:slug')
+	async getBySlug(@Param('slug') slug: string) {
+		return this.subcategoryService.getBySlug(slug)
+	}
 
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)

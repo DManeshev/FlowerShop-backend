@@ -13,4 +13,4 @@ export const returnProductObject: Prisma.ProductSelect = {
     status: true,
     isDelivery: true,
     flowers: true
-}
+}   

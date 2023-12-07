@@ -106,6 +106,21 @@ export class ProductService {
 		return products
 	}
 
+	async bySubcategory(subcategorySlug: string) {
+		const products = await this.prisma.product.findMany({
+			where: {
+				subcategory: {
+					slug: subcategorySlug
+				}
+			}
+		})
+
+		if (!products)
+			throw new NotFoundException('Товары для данной категории не найдены')
+
+		return products
+	}
+
 	async create(dto: ProductDto) {
 		const product = await this.prisma.product.create({
 			data: {
@@ -152,17 +167,16 @@ export class ProductService {
 			isDelivery,
 			flowers
 		} = dto
-
+		
 		const existingProduct = await this.prisma.product.findUnique({
 			where: { id },
 			include: { flowers: true }
 		})
-
+		
 		const currentFlowerIds = existingProduct.flowers.map(flower => flower.id)
 		const disconnectFlowerIds = currentFlowerIds.filter(
 			id => !flowers.some(flower => flower.id === id)
 		)
-		// const connectFlowers = flowers.filter(flower => !currentFlowerIds.includes(flower.id))
 
 		return this.prisma.product.update({
 			where: {

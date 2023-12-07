@@ -29,6 +29,11 @@ export class ProductController {
     return this.productService.byCategory(categorySlug)
   }
 
+  @Get('by-subcategory/:subcategorySlug')
+  async getProductBySubcategory(@Param('subcategorySlug') subcategorySlug: string) {
+    return this.productService.bySubcategory(subcategorySlug)
+  }
+
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Auth()

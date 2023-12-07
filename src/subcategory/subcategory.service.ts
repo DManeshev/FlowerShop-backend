@@ -22,6 +22,14 @@ export class SubcategoryService {
 		})
 	}
 
+	async getBySlug(slug: string) {
+		return this.prisma.subcategory.findUnique({
+			where: {
+				slug
+			}
+		})
+	}
+
 	async create(dto: SubCategoryDto) {
 		return this.prisma.subcategory.create({
 			data: {
