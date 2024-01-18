@@ -56,9 +56,9 @@ model Category {
   id       Int      @id @default(autoincrement())
   createAt DateTime @default(now()) @map("create_at")
 
-  name String @unique
-  slug String @unique
-  icon String
+  name  String @unique
+  slug  String @unique
+  icon  String
   image String @default("")
 
   products Product[]
@@ -81,18 +81,24 @@ model Subcategory {
 }
 
 model Order {
-  id           Int             @id @default(autoincrement())
-  createdAt    DateTime        @default(now()) @map("create_at")
-  updatedAt    DateTime        @updatedAt @map("update_at")
-  status       EnumOrderStatus @default(PENDING)
-  total        Int
-  commentary   String
-  delivery     String
-  deliveryDate String          @map("delivery_date")
-  deliveryTime String          @map("delivery_time")
-  name         String
-  phone        String
-  items        OrderItem[]
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("create_at")
+  updatedAt DateTime @updatedAt @map("update_at")
+
+  status EnumOrderStatus @default(PENDING)
+  total  Int
+
+  name       String
+  phone      String
+  commentary String
+
+  address      String
+  flat         String
+  hallway      String
+  deliveryDate String @map("delivery_date")
+  deliveryTime String @map("delivery_time")
+
+  items OrderItem[]
 }
 
 model OrderItem {

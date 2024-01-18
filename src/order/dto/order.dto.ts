@@ -18,7 +18,14 @@ export class OrderDto {
     commentary: string
 
     @IsString()
-    delivery: string
+    address: string
+
+    @IsString()
+    flat: string
+
+    @IsString()
+    @IsOptional()
+    hallway: string
 
     @IsString()
     deliveryDate: string
