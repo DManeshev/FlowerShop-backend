@@ -28,6 +28,11 @@ export class SubcategoryController {
 		return this.subcategoryService.getByCategory(+id)
 	}
 
+	@Get(':id')
+	async getById(@Param('id') id: string) {
+		return this.subcategoryService.byId(+id)
+	}
+
 	@Get('by-slug/:slug')
 	async getBySlug(@Param('slug') slug: string) {
 		return this.subcategoryService.getBySlug(slug)

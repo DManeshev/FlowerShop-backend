@@ -14,6 +14,12 @@ export class SubcategoryService {
 		})
 	}
 
+	async byId(id: number) {
+		return this.prisma.subcategory.findUnique({
+			where: { id }
+		})
+	}
+
 	async getByCategory(id: number) {
 		return this.prisma.subcategory.findMany({
 			where: {

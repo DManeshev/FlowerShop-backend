@@ -33,44 +33,44 @@ export class OrderService {
 	}
 
 	async placeOrder(dto: OrderDto) {
-        const total = dto.items.reduce((acc, item) => {
-            return acc + item.price * item.quantity
-        }, 0);
+        // const total = dto.items.reduce((acc, item) => {
+        //     return acc + item.price * item.quantity
+        // }, 0);
 
-		const order = await this.prisma.order.create({
-			data: {
-                name: dto.name,
-                phone: dto.phone,
-                commentary: dto.commentary,
-                address: dto.address,
-                flat: dto.flat,
-                hallway: dto.hallway,
-                deliveryDate: dto.deliveryDate,
-                deliveryTime: dto.deliveryTime,
-				status: dto.status,
-                total,
-				items: {
-					create: dto.items
-				},
-			}
-		})
+		// const order = await this.prisma.order.create({
+		// 	data: {
+        //         name: dto.name,
+        //         phone: dto.phone,
+        //         commentary: dto.commentary,
+        //         // address: dto.address,
+        //         // flat: dto.flat,
+        //         // hallway: dto.hallway,
+        //         deliveryDate: dto.deliveryDate,
+        //         deliveryTime: dto.deliveryTime,
+		// 		status: dto.status,
+        //         total,
+		// 		items: {
+		// 			create: dto.items
+		// 		},
+		// 	}
+		// })
 
-		const payment = await yooKassa.createPayment({
-            amount: {
-                value: total.toFixed(2),
-                currency: 'RUB'
-            },
-            payment_method_data: {
-                type: 'bank_card'
-            },
-            confirmation: {
-                type: 'redirect',
-                return_url: 'http://localhost:3000/thanks'
-            },
-            description: `Заказ №${order.id}`
-        })
+		// const payment = await yooKassa.createPayment({
+        //     amount: {
+        //         value: total.toFixed(2),
+        //         currency: 'RUB'
+        //     },
+        //     payment_method_data: {
+        //         type: 'bank_card'
+        //     },
+        //     confirmation: {
+        //         type: 'redirect',
+        //         return_url: 'http://localhost:3000/thanks'
+        //     },
+        //     description: `Заказ №${order.id}`
+        // })
         
-        return payment
+        // return payment
 	}
 
 	async updateStatus(dto: PaymentStatusDto) {
