@@ -10,7 +10,10 @@ export class SubcategoryService {
 
 	async getAll() {
 		return this.prisma.subcategory.findMany({
-			select: returnSubCategoryObject
+			select: returnSubCategoryObject,
+			orderBy: {
+				id: 'asc'
+			}
 		})
 	}
 
@@ -24,6 +27,9 @@ export class SubcategoryService {
 		return this.prisma.subcategory.findMany({
 			where: {
 				categoryId: id
+			},
+			orderBy: {
+				id: 'asc'
 			}
 		})
 	}

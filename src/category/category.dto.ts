@@ -7,6 +7,7 @@ export class CategoryDto {
     name: string
 
     @IsString()
+    @IsOptional() 
     icon: string
 
     @IsOptional()
