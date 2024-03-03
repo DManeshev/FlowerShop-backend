@@ -10,10 +10,10 @@ async function bootstrap() {
 
 	app.setGlobalPrefix('api')
 	app.enableCors({
-		origin: true,
+		origin: '*',
+		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 		credentials: true,
 		exposedHeaders: 'set-cookie',
-		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
 	})
 
 	await app.listen(4200)
