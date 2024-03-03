@@ -16,6 +16,11 @@ export class OrderController {
     return this.orderService.getAll()
   }
 
+  // @UsePipes(new ValidationPipe())
+  // @HttpCode(200)
+  // @Post()
+  // placeOrderWithoutPayment
+
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post()
