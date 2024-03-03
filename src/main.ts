@@ -12,9 +12,10 @@ async function bootstrap() {
 	app.enableCors({
 		origin: [
 			'http://localhost:3000',
-			'http://62.109.25.175:3000',
 			'http://62.109.25.175',
-			'http://yourflowers21.ru'
+			'http://62.109.25.175:3000',
+			'http://62.109.25.175:4200',
+			'http://yourflowers21.ru',
 		],
 		credentials: true,
 		exposedHeaders: 'set-cookie',
