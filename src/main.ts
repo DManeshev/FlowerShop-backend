@@ -10,13 +10,7 @@ async function bootstrap() {
 
 	app.setGlobalPrefix('api')
 	app.enableCors({
-		origin: [
-			'http://localhost:3000',
-			'http://62.109.25.175',
-			'http://62.109.25.175:3000',
-			'http://62.109.25.175:4200',
-			'http://yourflowers21.ru',
-		],
+		origin: true,
 		credentials: true,
 		exposedHeaders: 'set-cookie',
 		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
