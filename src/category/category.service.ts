@@ -8,14 +8,14 @@ import { generateSlug } from 'src/utils/generate-slug'
 export class CategoryService {
 	constructor(private prisma: PrismaService) {}
 
-    async getAll() {
-        return this.prisma.category.findMany({
-            select: returnCategoryObject,
+	async getAll() {
+		return this.prisma.category.findMany({
+			select: returnCategoryObject,
 			orderBy: {
-				id: 'asc',
+				id: 'asc'
 			}
-        })
-    }
+		})
+	}
 
 	async byId(id: number) {
 		const category = await this.prisma.category.findUnique({
@@ -28,7 +28,7 @@ export class CategoryService {
 		return category
 	}
 
-    async bySlug(slug: string) {
+	async bySlug(slug: string) {
 		const category = await this.prisma.category.findUnique({
 			where: { slug },
 			select: returnCategoryObject
@@ -39,12 +39,13 @@ export class CategoryService {
 		return category
 	}
 
-    async create(dto: CategoryDto) {
+	async create(dto: CategoryDto) {
 		return this.prisma.category.create({
 			data: {
 				name: dto.name,
 				slug: generateSlug(dto.name),
-                icon: dto.icon
+				icon: dto.icon,
+        order: dto.order
 			}
 		})
 	}
@@ -55,7 +56,7 @@ export class CategoryService {
 			data: {
 				name: dto.name,
 				slug: generateSlug(dto.name),
-                icon: dto.icon
+				icon: dto.icon
 			}
 		})
 	}

@@ -48,6 +48,7 @@ export class SubcategoryService {
 				name: dto.name,
 				icon: dto.icon,
 				slug: generateSlug(dto.name),
+        order: dto.order,
 				category: {
 					connect: {
 						id: dto.categoryId

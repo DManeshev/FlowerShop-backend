@@ -33,4 +33,10 @@ export class OrderController {
   updateStatus(@Body() dto: PaymentStatusDto) {
     return this.orderService.updateStatus(dto)
   }
+
+  @HttpCode(200)
+  @Post('mail')
+  sendMail() {
+    return this.orderService.sendMail()
+  }
 }
