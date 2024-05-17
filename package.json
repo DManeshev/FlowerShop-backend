@@ -44,6 +44,7 @@
     "rxjs": "^7.2.0",
     "uuid": "^9.0.0",
     "xregexp": "^5.1.1",
+    "yarn": "^1.22.21",
     "yookassa": "^0.1.1"
   },
   "devDependencies": {
