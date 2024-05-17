@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
@@ -12,6 +12,8 @@ import { FlowersModule } from './flowers/flowers.module'
 import { FilesModule } from './files/files.module'
 import { CategoryModule } from './category/category.module'
 import { SubcategoryModule } from './subcategory/subcategory.module'
+import { MailerModule } from '@nestjs-modules/mailer'
+import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter'
 
 @Module({
 	imports: [
@@ -24,7 +26,23 @@ import { SubcategoryModule } from './subcategory/subcategory.module'
 		FlowersModule,
 		FilesModule,
 		CategoryModule,
-		SubcategoryModule
+		SubcategoryModule,
+		MailerModule.forRootAsync({
+			imports: [ConfigModule],
+			useFactory: () => ({
+				transport: 'smtps://flowershop21@mail.ru:dfdePTDrtCN6NFYmMGWx@smtp.mail.ru',
+				defaults: {
+					from: 'Новый заказ'
+				},
+				template: {
+					adapter: new EjsAdapter(),
+					options: {
+						strict: false,
+					},
+				},
+			}),
+			inject: [ConfigService]
+		}),
 	],
 	controllers: [AppController],
 	providers: [AppService, PrismaService]
