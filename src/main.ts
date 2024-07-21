@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core'
 import { PrismaService } from './prisma.service'
 import { AppModule } from './app.module'
-import { urlencoded, json } from 'express';
+import { urlencoded, json } from 'express'
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
@@ -15,9 +15,9 @@ async function bootstrap() {
 	app.enableCors({
 		origin: [
 			'http://localhost:3000',
-			'http://62.109.25.175',
-			'http://62.109.25.175:3000',
-			'http://62.109.25.175:4200',
+			'http://83.220.168.220',
+			'http://83.220.168.220:3000',
+			'http://83.220.168.220:4200',
 			'http://yourflowers21.ru'
 		],
 		credentials: true,
