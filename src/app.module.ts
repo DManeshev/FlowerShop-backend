@@ -13,7 +13,7 @@ import { FilesModule } from './files/files.module'
 import { CategoryModule } from './category/category.module'
 import { SubcategoryModule } from './subcategory/subcategory.module'
 import { MailerModule } from '@nestjs-modules/mailer'
-import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter'
+import { getMailConfig } from './configs/mail.config'
 
 @Module({
 	imports: [
@@ -27,22 +27,11 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter'
 		FilesModule,
 		CategoryModule,
 		SubcategoryModule,
-		MailerModule.forRootAsync({
-			imports: [ConfigModule],
-			useFactory: () => ({
-				transport: 'smtps://flowershop21@mail.ru:dfdePTDrtCN6NFYmMGWx@smtp.mail.ru',
-				defaults: {
-					from: 'Новый заказ'
-				},
-				template: {
-					adapter: new EjsAdapter(),
-					options: {
-						strict: false,
-					},
-				},
-			}),
-			inject: [ConfigService]
-		}),
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getMailConfig,
+    })
 	],
 	controllers: [AppController],
 	providers: [AppService, PrismaService]

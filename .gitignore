@@ -1,6 +1,9 @@
 # compiled output
 /dist
 /node_modules
+build/
+tmp/
+temp/
 
 # Logs
 logs
@@ -36,3 +39,7 @@ lerna-debug.log*
 
 # env
 .env
+
+docker-compose.yml
+volumes/
+/.vault

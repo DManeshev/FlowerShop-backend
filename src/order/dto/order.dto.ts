@@ -1,51 +1,63 @@
-import { EnumOrderStatus } from "@prisma/client";
-import { Type } from "class-transformer";
-import { IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
+import { EnumDeliveryMethod, EnumOrderStatus } from '@prisma/client'
+import { Type } from 'class-transformer'
+import {
+	IsArray,
+	IsEnum,
+	IsNumber,
+	IsOptional,
+	IsString,
+	ValidateNested
+} from 'class-validator'
 
 export class OrderDto {
-    @IsOptional()
-    @IsEnum(EnumOrderStatus)
-    status: EnumOrderStatus
+	@IsOptional()
+	@IsEnum(EnumOrderStatus)
+	status: EnumOrderStatus
 
-    @IsString()
-    name: string
+	@IsString()
+	name: string
 
-    @IsString()
-    phone: string
+	@IsString()
+	phone: string
 
-    @IsString()
-    @IsOptional()
-    commentary: string
+	@IsString()
+	@IsOptional()
+	commentary: string
 
-    @IsString()
-    address: string
+	@IsString()
+	deliveryDate: string
 
-    @IsString()
-    flat: string
+	@IsString()
+	deliveryTime: string
 
-    @IsString()
-    @IsOptional()
-    hallway: string
+  @IsEnum(EnumDeliveryMethod)
+  deliveryMethod: EnumDeliveryMethod
 
-    @IsString()
-    deliveryDate: string
+  @IsString()
+  city: string
 
-    @IsString()
-    deliveryTime: string
+  @IsString()
+  street: string
 
-    @IsArray()
-    @ValidateNested({ each: true })
-    @Type(() => OrderItemDto)
-    items: OrderItemDto[]
+  @IsString()
+  houseNumber: string
+
+  @IsString()
+  apartment: string
+
+	@IsArray()
+	@ValidateNested({ each: true })
+	@Type(() => OrderItemDto)
+	items: OrderItemDto[]
 }
 
 export class OrderItemDto {
-    @IsNumber()
-    quantity: number
+	@IsNumber()
+	quantity: number
 
-    @IsNumber()
-    price: number
+	@IsNumber()
+	price: number
 
-    @IsNumber()
-    productId: number
+	@IsNumber()
+	productId: number
 }

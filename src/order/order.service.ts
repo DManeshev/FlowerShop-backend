@@ -37,42 +37,41 @@ export class OrderService {
 		})
 	}
 
-	async placeOrder(dto: OrderDto) {
-		// const total = dto.items.reduce((acc, item) => {
-		//     return acc + item.price * item.quantity
-		// }, 0);
-		// const order = await this.prisma.order.create({
-		// 	data: {
-		//         name: dto.name,
-		//         phone: dto.phone,
-		//         commentary: dto.commentary,
-		//         // address: dto.address,
-		//         // flat: dto.flat,
-		//         // hallway: dto.hallway,
-		//         deliveryDate: dto.deliveryDate,
-		//         deliveryTime: dto.deliveryTime,
-		// 		status: dto.status,
-		//         total,
-		// 		items: {
-		// 			create: dto.items
-		// 		},
-		// 	}
-		// })
-		// const payment = await yooKassa.createPayment({
-		//     amount: {
-		//         value: total.toFixed(2),
-		//         currency: 'RUB'
-		//     },
-		//     payment_method_data: {
-		//         type: 'bank_card'
-		//     },
-		//     confirmation: {
-		//         type: 'redirect',
-		//         return_url: 'http://localhost:3000/thanks'
-		//     },
-		//     description: `Заказ №${order.id}`
-		// })
-		// return payment
+	async createOrder(dto: OrderDto) {
+		const total = dto.items.reduce((acc, item) => {
+			return acc + item.price * item.quantity
+		}, 0)
+
+		//   {
+		//     "name": "Букет из роз",
+		//     "phone": "89999999999",
+		//     "address": "Чебоксары, ул. Чапаева, д. 2",
+		//     "flat": "58",
+		//     "deliveryDate": "01.10.2024",
+		//     "deliveryTime": "13:00",
+		//     "items": []
+		// }
+
+		const order = await this.prisma.order.create({
+			data: {
+				name: dto.name,
+				phone: dto.phone,
+				commentary: dto.commentary,
+				deliveryDate: dto.deliveryDate,
+				deliveryTime: dto.deliveryTime,
+				status: dto.status,
+        city: dto.city,
+        street: dto.street,
+        houseNumber: dto.houseNumber,
+        apartment: dto.apartment,
+				total,
+        items: {
+          create: dto.items
+        }
+			}
+		})
+
+		// await this.sendMail()
 	}
 
 	async updateStatus(dto: PaymentStatusDto) {
@@ -99,18 +98,25 @@ export class OrderService {
 		return true
 	}
 
-	async sendMail() {
-		await this.mailerService.sendMail({
-            to: 'flowershop21@mail.ru',
-            // from: 'Интернет магазин: "Твои цветы"',
-            subject: 'Новый заказ',
-            template: join(__dirname, '/../templates', 'confirmReg'),
-        })
-        .catch((error) => {
+	async sendMail(order: OrderDto) {
+		try {
+			await this.mailerService.sendMail({
+				to: 'yourflowers21@yandex.ru',
+				subject: 'Новый заказ',
+				template: join(__dirname, '/../templates', 'new-order'),
+				context: {
+					id: 1,
+					name: 'qwerqwer',
+					price: 500,
+					phone: '123123',
+					address: 'sdsafdsafsadf'
+				}
+			})
+		} catch (error) {
 			throw new HttpException(
 				`Ошибка работы почты: ${JSON.stringify(error)}`,
 				HttpStatus.UNPROCESSABLE_ENTITY
 			)
-        })
+		}
 	}
 }

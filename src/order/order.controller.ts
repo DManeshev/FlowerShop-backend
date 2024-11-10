@@ -16,27 +16,16 @@ export class OrderController {
     return this.orderService.getAll()
   }
 
-  // @UsePipes(new ValidationPipe())
-  // @HttpCode(200)
-  // @Post()
-  // placeOrderWithoutPayment
-
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post()
-  placeOrder(@Body() dto: OrderDto) {
-    return this.orderService.placeOrder(dto)
+  createOrder(@Body() dto: OrderDto) {
+    return this.orderService.createOrder(dto)
   }
 
   @HttpCode(200)
   @Post('status')
   updateStatus(@Body() dto: PaymentStatusDto) {
     return this.orderService.updateStatus(dto)
-  }
-
-  @HttpCode(200)
-  @Post('mail')
-  sendMail() {
-    return this.orderService.sendMail()
   }
 }
