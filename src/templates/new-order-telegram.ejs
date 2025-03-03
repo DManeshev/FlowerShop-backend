@@ -1,0 +1,16 @@
+<b>📌 Новый заказ №<%= id %> поступил!</b>
+
+👤 <b>Клиент:</b> <%= name %>
+📞 <b>Телефон:</b> <%= phone %>
+🚚 <b>Тип доставки:</b> <%= deliveryType === "delivery" ? "Доставка" : "Самовызов" %>
+<% if (deliveryType === "delivery") { %>
+📍 <b>Адрес:</b> <%= address %>  
+⏰ <b>Время:</b> <%= deliveryTime %>  
+<% } %>
+📦 <b>Товар:</b>
+<% items.forEach(function(item, index){ %>
+<b><%= index + 1 %>:</b>  <%= item.product.name %>
+<% }) %>
+💰 <b>Цена:</b> <%= total %>
+
+💬 <i>Пожалуйста, обработай заказ как можно скорее.</i>

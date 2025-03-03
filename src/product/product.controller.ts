@@ -8,7 +8,7 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @UsePipes(new ValidationPipe())
+  @UsePipes(new ValidationPipe()) 
   @Get()
   async getAll(@Query() queryDto: GetAllProductDto) {
     return this.productService.getAll(queryDto);

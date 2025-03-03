@@ -14,6 +14,7 @@ import { CategoryModule } from './category/category.module'
 import { SubcategoryModule } from './subcategory/subcategory.module'
 import { MailerModule } from '@nestjs-modules/mailer'
 import { getMailConfig } from './configs/mail.config'
+import { TelegramModule } from './telegram/telegram.module'
 
 @Module({
 	imports: [
@@ -27,6 +28,7 @@ import { getMailConfig } from './configs/mail.config'
 		FilesModule,
 		CategoryModule,
 		SubcategoryModule,
+    TelegramModule,
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

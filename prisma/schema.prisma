@@ -77,13 +77,13 @@ model Order {
   commentary     String
   deliveryDate   String             @map("delivery_date")
   deliveryTime   String             @map("delivery_time")
-  deliveryMethod EnumDeliveryMethod @default(delivery)
+  deliveryMethod EnumDeliveryMethod @default(delivery) @map("delivery_method")
+  name           String
+  phone          String
   city           String
   street         String
   houseNumber    String             @map("house_number")
   apartment      String
-  name           String
-  phone          String
   items          OrderItem[]
 }
 
