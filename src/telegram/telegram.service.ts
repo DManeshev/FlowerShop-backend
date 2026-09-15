@@ -2,9 +2,9 @@ import { Injectable, Logger, OnModuleInit } from "@nestjs/common";
 import { Bot, InlineKeyboard } from "grammy";
 import * as ejs from 'ejs'
 import { join } from 'path'
-import { OrderItem } from "@prisma/client";
-import { OrderService } from "../order/order.service";
 import { OrderType } from "../order/order.types";
+import { SocksProxyAgent } from 'socks-proxy-agent'
+import https from 'node:https'
 
 @Injectable()
 export class TelegramService {
@@ -13,8 +13,18 @@ export class TelegramService {
 
   private NEW_ORDER_TEMPLATE_PATH = join(__dirname, "/../templates", "new-order-telegram.ejs");
   
+  private proxyAgent = new SocksProxyAgent(
+    `socks5h://${process.env.TELEGRAM_PROXY_USERNAME}:${process.env.TELEGRAM_PROXY_PASSWORD}@${process.env.TELEGRAM_PROXY_HOST}:${process.env.TELEGRAM_PROXY_PORT}`
+  );
+
   constructor() {
-    this.bot = new Bot(process.env.TELEGRAM_BOT_TOKEN);
+    this.bot = new Bot(process.env.TELEGRAM_BOT_TOKEN, {
+      client: {
+        baseFetchConfig: {
+          agent: this.proxyAgent,
+        }
+      }
+    });
   }
 
   async sendNotification(order: OrderType) {

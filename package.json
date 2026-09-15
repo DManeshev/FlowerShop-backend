@@ -50,6 +50,7 @@
     "pg": "^8.23.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
+    "socks-proxy-agent": "^10.1.0",
     "string-width": "^8.2.2",
     "uuid": "^14.0.2",
     "wrap-ansi": "^10.0.1",
