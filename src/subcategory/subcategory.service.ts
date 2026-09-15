@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'src/prisma.service'
+import { PrismaService } from '../prisma.service'
 import { SubCategoryDto } from './subcategory.dto'
-import { generateSlug } from 'src/utils/generate-slug'
+import { generateSlug } from '../utils/generate-slug'
 import { returnSubCategoryObject } from './return-category.object'
 
 @Injectable()

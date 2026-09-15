@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'src/prisma.service'
-import { yandexS3 } from 'src/storage.yandex'
+import { PrismaService } from '../prisma.service'
+import { yandexS3 } from '../storage.yandex'
 
 @Injectable()
 export class FilesService {

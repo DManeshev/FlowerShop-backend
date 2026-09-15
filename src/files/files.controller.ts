@@ -9,7 +9,7 @@ import {
 	HttpCode
 } from '@nestjs/common'
 import { FilesService } from './files.service'
-import { Auth } from 'src/auth/decorators/auth.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
 import { FilesInterceptor } from '@nestjs/platform-express'
 
 @Controller('files')

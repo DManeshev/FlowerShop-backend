@@ -11,7 +11,7 @@ import {
 	Put
 } from '@nestjs/common'
 import { FlowersService } from './flowers.service'
-import { Auth } from 'src/auth/decorators/auth.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
 import { FlowerDto } from './flower.dto'
 
 @Controller('flowers')

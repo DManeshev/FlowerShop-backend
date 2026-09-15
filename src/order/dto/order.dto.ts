@@ -30,20 +30,20 @@ export class OrderDto {
 	@IsString()
 	deliveryTime: string
 
-  @IsEnum(EnumDeliveryMethod)
-  deliveryMethod: EnumDeliveryMethod
+	@IsEnum(EnumDeliveryMethod)
+	deliveryMethod: EnumDeliveryMethod
 
-  @IsString()
-  city: string
+	@IsString()
+	city: string
 
-  @IsString()
-  street: string
+	@IsString()
+	street: string
 
-  @IsString()
-  houseNumber: string
+	@IsString()
+	houseNumber: string
 
-  @IsString()
-  apartment: string
+	@IsString()
+	apartment: string
 
 	@IsArray()
 	@ValidateNested({ each: true })

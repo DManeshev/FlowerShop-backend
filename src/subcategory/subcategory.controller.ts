@@ -11,7 +11,7 @@ import {
 	Get
 } from '@nestjs/common'
 import { SubcategoryService } from './subcategory.service'
-import { Auth } from 'src/auth/decorators/auth.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
 import { SubCategoryDto } from './subcategory.dto'
 
 @Controller('subcategory')

@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer'
 import { IsArray, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
-import { SubCategoryDto } from 'src/subcategory/subcategory.dto'
+import { SubCategoryDto } from '../subcategory/subcategory.dto'
 
 export class CategoryDto {
 	@IsString()

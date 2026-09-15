@@ -1,5 +1,5 @@
 import { Body, Controller, Get, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common'
-import { Auth } from 'src/auth/decorators/auth.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
 import { OrderDto } from './dto/order.dto'
 import { OrderService } from './order.service'
 
@@ -19,11 +19,5 @@ export class OrderController {
   @Post()
   createOrder(@Body() dto: OrderDto) {
     return this.orderService.createOrder(dto)
-  }
-
-  @HttpCode(200)
-  @Post('status')
-  updateStatus(@Body() dto) {
-    return this.orderService.updateStatus(dto)
   }
 }

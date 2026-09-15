@@ -1,22 +1,18 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { EnumOrderStatus } from '@prisma/client'
-import { PrismaService } from 'src/prisma.service'
-import { returnProductObject, returnProductObjectForOrder } from 'src/product/return-product.object'
+import { Injectable } from '@nestjs/common'
 import { OrderDto } from './dto/order.dto'
-import { MailerService } from '@nestjs-modules/mailer'
-import { join } from 'path'
-import * as ejs from 'ejs';
-import { TelegramService } from 'src/telegram/telegram.service'
+import { TelegramService } from '../telegram/telegram.service'
+import { PrismaService } from '../prisma.service';
+import { returnProductObject } from '../product/return-product.object';
+import { Order } from '@prisma/client';
+import { orderForTelegram } from './return-order.object';
+import { OrderType } from './order.types';
 
 @Injectable()
 export class OrderService {
-  NEW_ORDER_TEMPLATE_PATH = join(__dirname, "/../templates", "new-order-telegram.ejs");
-
   constructor(
     private prisma: PrismaService,
-    private mailerService: MailerService,
     private telegramService: TelegramService,
-  ) { }
+  ) {}
 
   async getAll() {
     return this.prisma.order.findMany({
@@ -35,12 +31,19 @@ export class OrderService {
     })
   }
 
+  async findUniqueOrder(orderId: number) {
+    return await this.prisma.order.findUnique({
+      where: { id: orderId },
+      include: orderForTelegram,
+    })
+  }
+
   async createOrder(dto: OrderDto) {
-    const total = dto.items.reduce((acc, item) => {
+    const total: number = dto.items.reduce((acc, item) => {
       return acc + item.price * item.quantity
     }, 0)
 
-    const newOrder = await this.prisma.order.create({
+    const createdOrder: Order = await this.prisma.order.create({
       data: {
         name: dto.name,
         phone: dto.phone,
@@ -57,33 +60,11 @@ export class OrderService {
           create: dto.items,
         }
       }
-    })
+    });
 
-    const order = await this.prisma.order.findUnique({
-      where: { id: newOrder.id },
-      include: {
-        items: {
-          include: {
-            product: {
-              select: returnProductObjectForOrder,
-            }
-          }
-        },
-      }
-    })
+    const order: OrderType = await this.findUniqueOrder(createdOrder.id);
 
-    const template: string = await ejs.renderFile(this.NEW_ORDER_TEMPLATE_PATH, {
-      id: order.id,
-      name: order.name,
-      phone: order.phone,
-      deliveryType: order.deliveryMethod,
-      address: `${order.city}, ${order.street}, ${order.houseNumber}, ${order.apartment}`,
-      deliveryTime: order.deliveryTime,
-      items: order.items,
-      total: order.total,
-    })
-
-    this.telegramService.sendNotification(order.items[0].id, template)
+    this.telegramService.sendNotification(order)
   }
 
   async updateStatus(dto) {
@@ -108,27 +89,5 @@ export class OrderService {
     // }
 
     // return true
-  }
-
-  async sendMail(order: OrderDto) {
-    try {
-      await this.mailerService.sendMail({
-        to: 'yourflowers21@yandex.ru',
-        subject: 'Новый заказ',
-        template: join(__dirname, '/../templates', 'new-order'),
-        context: {
-          id: 1,
-          name: 'qwerqwer',
-          price: 500,
-          phone: '123123',
-          address: 'sdsafdsafsadf'
-        }
-      })
-    } catch (error) {
-      throw new HttpException(
-        `Ошибка работы почты: ${JSON.stringify(error)}`,
-        HttpStatus.UNPROCESSABLE_ENTITY
-      )
-    }
   }
 }

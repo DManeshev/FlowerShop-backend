@@ -12,8 +12,7 @@ import { FlowersModule } from './flowers/flowers.module'
 import { FilesModule } from './files/files.module'
 import { CategoryModule } from './category/category.module'
 import { SubcategoryModule } from './subcategory/subcategory.module'
-import { MailerModule } from '@nestjs-modules/mailer'
-import { getMailConfig } from './configs/mail.config'
+// import { MailerModule } from '@nestjs-modules/mailer'
 import { TelegramModule } from './telegram/telegram.module'
 
 @Module({
@@ -28,12 +27,11 @@ import { TelegramModule } from './telegram/telegram.module'
 		FilesModule,
 		CategoryModule,
 		SubcategoryModule,
-    TelegramModule,
-    MailerModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: getMailConfig,
-    })
+		TelegramModule,
+		// MailerModule.forRootAsync({
+		// 	imports: [ConfigModule],
+		// 	inject: [ConfigService],
+		// })
 	],
 	controllers: [AppController],
 	providers: [AppService, PrismaService]

@@ -10,7 +10,8 @@ import {
 	IsString,
 	ValidateNested
 } from 'class-validator'
-import { FlowerDto } from 'src/flowers/flower.dto'
+import { FlowerDto } from '../../flowers/flower.dto'
+
 
 export class ProductDto {
 	@IsString()
