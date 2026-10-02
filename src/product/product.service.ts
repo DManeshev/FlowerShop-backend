@@ -1,17 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { Prisma } from '@prisma/client'
+import { Prisma, Product } from '@prisma/client'
 import { PaginationService } from '../pagination/pagination.service'
 import { PrismaService } from '../prisma.service'
 import { generateSlug } from '../utils/generate-slug'
 import { EnumProductSort, GetAllProductDto } from './dto/get-all.products.dto'
 import { ProductDto } from './dto/product.dto'
 import { returnProductObject } from './return-product.object'
+import { FilesService } from '../files/files.service'
 
 @Injectable()
 export class ProductService {
 	constructor(
 		private prisma: PrismaService,
-		private paginationService: PaginationService
+		private paginationService: PaginationService,
+		private filesService: FilesService,
 	) {}
 
 	async getAll(dto: GetAllProductDto = {}) {
@@ -212,6 +214,12 @@ export class ProductService {
 	}
 
 	async delete(id: number) {
+		const product: Product = await this.byId(id);
+
+		await Promise.all(product.images.map((image: string) =>
+			this.filesService.deleteImage(image)
+		))
+
 		return this.prisma.product.delete({ where: { id } })
 	}
 }

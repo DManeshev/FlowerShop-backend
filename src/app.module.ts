@@ -12,12 +12,13 @@ import { FlowersModule } from './flowers/flowers.module'
 import { FilesModule } from './files/files.module'
 import { CategoryModule } from './category/category.module'
 import { SubcategoryModule } from './subcategory/subcategory.module'
-// import { MailerModule } from '@nestjs-modules/mailer'
 import { TelegramModule } from './telegram/telegram.module'
 
 @Module({
 	imports: [
-		ConfigModule.forRoot(),
+		ConfigModule.forRoot({
+			isGlobal: true
+		}),
 		AuthModule,
 		UserModule,
 		ProductModule,
@@ -28,10 +29,6 @@ import { TelegramModule } from './telegram/telegram.module'
 		CategoryModule,
 		SubcategoryModule,
 		TelegramModule,
-		// MailerModule.forRootAsync({
-		// 	imports: [ConfigModule],
-		// 	inject: [ConfigService],
-		// })
 	],
 	controllers: [AppController],
 	providers: [AppService, PrismaService]

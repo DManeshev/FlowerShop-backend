@@ -18,7 +18,7 @@ export class FilesController {
 
 	@Auth()
 	@Post()
-	@UseInterceptors(FilesInterceptor('files[]'))
+	@UseInterceptors(FilesInterceptor('files'))
 	async uploadImage(@UploadedFiles() files: Express.Multer.File[]) {
 		return this.filesService.uploadImage(files)
 	}
