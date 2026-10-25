@@ -6,17 +6,13 @@ export class CategoryDto {
 	@IsString()
 	name: string
 
-	@IsString()
-	@IsOptional()
-	icon: string
-
 	@IsOptional()
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => SubCategoryDto)
 	subCategories: SubCategoryDto[]
 
-  @IsOptional()
-  @IsNumber()
-  order: number
+	@IsOptional()
+	@IsNumber()
+	order: number
 }

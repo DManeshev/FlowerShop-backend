@@ -48,8 +48,6 @@ model Category {
   createAt      DateTime      @default(now()) @map("create_at")
   name          String        @unique
   slug          String        @unique
-  icon          String
-  image         String        @default("")
   order         Int
   products      Product[]
   subCategories Subcategory[]
@@ -57,13 +55,10 @@ model Category {
 
 model Subcategory {
   id         Int       @id @default(autoincrement())
-  
   name       String    @unique
   slug       String    @unique
   order      Int
-  
   products   Product[]
-
   categoryId Int       @map("category_id")
   category   Category  @relation(fields: [categoryId], references: [id])
 }

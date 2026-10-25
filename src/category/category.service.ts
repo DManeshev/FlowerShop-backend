@@ -44,8 +44,7 @@ export class CategoryService {
 			data: {
 				name: dto.name,
 				slug: generateSlug(dto.name),
-				icon: dto.icon,
-        order: dto.order
+        		order: dto.order
 			}
 		})
 	}
@@ -56,7 +55,6 @@ export class CategoryService {
 			data: {
 				name: dto.name,
 				slug: generateSlug(dto.name),
-				icon: dto.icon
 			}
 		})
 	}
