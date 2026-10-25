@@ -4,10 +4,6 @@ export class SubCategoryDto {
 	@IsString()
 	name: string
 
-	@IsString()
-	@IsOptional()
-	icon: string
-
 	@IsNumber()
 	categoryId: number
 

@@ -8,10 +8,6 @@ export enum EnumProductSort {
 
 export class GetAllProductDto extends PaginationDto {
     @IsOptional()
-    @IsEnum(EnumProductSort)
-    sort?: EnumProductSort
-
-    @IsOptional()
     @IsString()
     searchTerm?: string
 }

@@ -46,9 +46,8 @@ export class SubcategoryService {
 		return this.prisma.subcategory.create({
 			data: {
 				name: dto.name,
-				icon: dto.icon,
 				slug: generateSlug(dto.name),
-        order: dto.order,
+        		order: dto.order,
 				category: {
 					connect: {
 						id: dto.categoryId
@@ -59,13 +58,12 @@ export class SubcategoryService {
 	}
 
 	async update(id: number, dto: SubCategoryDto) {
-		const { name, icon, categoryId } = dto
+		const { name, categoryId } = dto
 
 		return this.prisma.subcategory.update({
 			where: { id },
 			data: {
 				name,
-				icon,
 				slug: generateSlug(name),
 				category: {
 					connect: {

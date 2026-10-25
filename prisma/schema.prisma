@@ -57,13 +57,14 @@ model Category {
 
 model Subcategory {
   id         Int       @id @default(autoincrement())
+  
   name       String    @unique
   slug       String    @unique
-  icon       String
-  categoryId Int       @map("category_id")
-  image      String    @default("")
   order      Int
+  
   products   Product[]
+
+  categoryId Int       @map("category_id")
   category   Category  @relation(fields: [categoryId], references: [id])
 }
 

@@ -17,15 +17,9 @@ export class ProductService {
 	) {}
 
 	async getAll(dto: GetAllProductDto = {}) {
-		const { sort, searchTerm } = dto
+		const { searchTerm } = dto
 
 		const prismaSort: Prisma.ProductOrderByWithRelationInput[] = []
-
-		if (sort === EnumProductSort.LOW_PRICE) {
-			prismaSort.push({ price: 'asc' })
-		} else {
-			prismaSort.push({ price: 'desc' })
-		}
 
 		const prismaSearchTermFilter: Prisma.ProductWhereInput = searchTerm
 			? {
