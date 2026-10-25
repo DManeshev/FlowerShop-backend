@@ -8,8 +8,8 @@ datasource db {
 
 model User {
   id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now()) @map("create_at")
-  updatedAt  DateTime @updatedAt @map("update_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   email      String   @unique
   password   String
   isAdmin    Boolean  @default(false) @map("is_admin")
@@ -20,8 +20,8 @@ model User {
 
 model Product {
   id            Int               @id @default(autoincrement())
-  createdAt     DateTime          @default(now()) @map("create_at")
-  updatedAt     DateTime          @updatedAt @map("update_at")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
   name          String
   slug          String            @unique
   description   String?
@@ -45,7 +45,7 @@ model Flower {
 
 model Category {
   id            Int           @id @default(autoincrement())
-  createAt      DateTime      @default(now()) @map("create_at")
+  createdAt      DateTime     @default(now()) @map("created_at")
   name          String        @unique
   slug          String        @unique
   order         Int
@@ -65,8 +65,8 @@ model Subcategory {
 
 model Order {
   id             Int                @id @default(autoincrement())
-  createdAt      DateTime           @default(now()) @map("create_at")
-  updatedAt      DateTime           @updatedAt @map("update_at")
+  createdAt      DateTime           @default(now()) @map("created_at")
+  updatedAt      DateTime           @updatedAt @map("updated_at")
   status         EnumOrderStatus    @default(PENDING)
   total          Int
   commentary     String
@@ -84,8 +84,8 @@ model Order {
 
 model OrderItem {
   id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now()) @map("create_at")
-  updatedAt DateTime @updatedAt @map("update_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
   quantity  Int
   price     Int
   orderId   Int?     @map("order_id")
