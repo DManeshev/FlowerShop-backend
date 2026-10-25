@@ -19,7 +19,11 @@ export class ProductService {
 	async getAll(dto: GetAllProductDto = {}) {
 		const { searchTerm } = dto
 
-		const prismaSort: Prisma.ProductOrderByWithRelationInput[] = []
+		const prismaSort: Prisma.ProductOrderByWithRelationInput[] = [
+			{
+				createdAt: 'desc'
+			}
+		]
 
 		const prismaSearchTermFilter: Prisma.ProductWhereInput = searchTerm
 			? {
