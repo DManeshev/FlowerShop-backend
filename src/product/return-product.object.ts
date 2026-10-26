@@ -9,7 +9,7 @@ export const returnProductObject: Prisma.ProductSelect = {
   createdAt: true,
   images: true,
   categoryId: true,
-  subcategoryId: true,
+  category: true,
   status: true,
   isDelivery: true,
   flowers: true

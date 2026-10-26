@@ -1,18 +1,14 @@
-import { Type } from 'class-transformer'
-import { IsArray, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
-import { SubCategoryDto } from '../subcategory/subcategory.dto'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
 
 export class CategoryDto {
 	@IsString()
 	name: string
 
 	@IsOptional()
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => SubCategoryDto)
-	subCategories: SubCategoryDto[]
+	@IsNumber()
+	order?: number
 
 	@IsOptional()
 	@IsNumber()
-	order: number
+	parentId: number | null
 }

@@ -16,11 +16,25 @@ import { CategoryDto } from './category.dto'
 
 @Controller('categories')
 export class CategoryController {
-	constructor(private readonly categoryService: CategoryService) {}
+	constructor(private readonly categoryService: CategoryService) { }
 
+	@HttpCode(200)
 	@Get()
 	async getAll() {
 		return this.categoryService.getAll()
+	}
+
+	@HttpCode(200)
+	@Get('subcategories')
+	async getAllSubcategories() {
+		return this.categoryService.getAllSubcategories()
+	}
+
+	@Auth()
+	@HttpCode(200)
+	@Get('subcategories/:parentId')
+	async getSubcategoryByParentId(@Param('parentId') parentId: string) {
+		return this.categoryService.getSubcategoryByParentId(+parentId)
 	}
 
 	@Get(':id')

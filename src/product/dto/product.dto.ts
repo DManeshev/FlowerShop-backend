@@ -31,9 +31,6 @@ export class ProductDto {
 	@IsNumber()
 	categoryId: number
 
-	@IsNumber()
-	subcategoryId: number
-
 	@IsEnum(EnumProductStatus)
 	status: EnumProductStatus
 

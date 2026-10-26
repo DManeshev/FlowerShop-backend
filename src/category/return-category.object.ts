@@ -6,5 +6,6 @@ export const returnCategoryObject: Prisma.CategorySelect = {
 	name: true,
 	slug: true,
 	order: true,
-	subCategories: true,
+	parentId: true,
+	subcategories: true,
 }

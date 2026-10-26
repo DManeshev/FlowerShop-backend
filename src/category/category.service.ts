@@ -6,14 +6,44 @@ import { generateSlug } from '../utils/generate-slug'
 
 @Injectable()
 export class CategoryService {
-	constructor(private prisma: PrismaService) {}
+	constructor(private prisma: PrismaService) { }
 
 	async getAll() {
 		return this.prisma.category.findMany({
-			select: returnCategoryObject,
+			where: {
+				parentId: null,
+			},
 			orderBy: {
 				id: 'asc'
-			}
+			},
+			select: returnCategoryObject,
+		})
+	}
+
+	// TODO: Обобщить c GelAll
+	async getAllSubcategories() {
+		return this.prisma.category.findMany({
+			where: {
+				parentId: {
+					not: null,
+				},
+			},
+			orderBy: {
+				id: 'asc'
+			},
+			select: returnCategoryObject,
+		})
+	}
+
+	async getSubcategoryByParentId(parentId: number) {
+		return this.prisma.category.findMany({
+			where: {
+				parentId
+			},
+			orderBy: {
+				id: 'asc'
+			},
+			select: returnCategoryObject,
 		})
 	}
 
@@ -40,12 +70,16 @@ export class CategoryService {
 	}
 
 	async create(dto: CategoryDto) {
+		const { name, order, parentId } = dto;
+
 		return this.prisma.category.create({
 			data: {
-				name: dto.name,
-				slug: generateSlug(dto.name),
-        		order: dto.order
-			}
+				name,
+				order,
+				parentId,
+				slug: generateSlug(name), // TODO: SLUG НЕ РАБОТАЕТ
+			},
+			select: returnCategoryObject
 		})
 	}
 

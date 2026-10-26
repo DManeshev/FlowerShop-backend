@@ -4,11 +4,11 @@ import { GetAllProductDto } from './dto/get-all.products.dto';
 import { ProductDto } from './dto/product.dto';
 import { ProductService } from './product.service';
 
-@Controller('products') 
+@Controller('products')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
-  @UsePipes(new ValidationPipe()) 
+  @UsePipes(new ValidationPipe())
   @Get()
   async getAll(@Query() queryDto: GetAllProductDto) {
     return this.productService.getAll(queryDto);
@@ -27,11 +27,6 @@ export class ProductController {
   @Get('by-category/:categorySlug')
   async getProductByCategory(@Param('categorySlug') categorySlug: string) {
     return this.productService.byCategory(categorySlug)
-  }
-
-  @Get('by-subcategory/:subcategorySlug')
-  async getProductBySubcategory(@Param('subcategorySlug') subcategorySlug: string) {
-    return this.productService.bySubcategory(subcategorySlug)
   }
 
   @UsePipes(new ValidationPipe())

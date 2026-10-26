@@ -11,7 +11,6 @@ import { UserModule } from './user/user.module'
 import { FlowersModule } from './flowers/flowers.module'
 import { FilesModule } from './files/files.module'
 import { CategoryModule } from './category/category.module'
-import { SubcategoryModule } from './subcategory/subcategory.module'
 import { TelegramModule } from './telegram/telegram.module'
 
 @Module({
@@ -27,10 +26,9 @@ import { TelegramModule } from './telegram/telegram.module'
 		FlowersModule,
 		FilesModule,
 		CategoryModule,
-		SubcategoryModule,
 		TelegramModule,
 	],
 	controllers: [AppController],
 	providers: [AppService, PrismaService]
 })
-export class AppModule {}
+export class AppModule { }

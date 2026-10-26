@@ -14,7 +14,7 @@ export class ProductService {
 		private prisma: PrismaService,
 		private paginationService: PaginationService,
 		private filesService: FilesService,
-	) {}
+	) { }
 
 	async getAll(dto: GetAllProductDto = {}) {
 		const { searchTerm } = dto
@@ -49,7 +49,7 @@ export class ProductService {
 						}
 					}
 				]
-			  }
+			}
 			: {}
 
 		const { perPage, skip } = this.paginationService.getPagination(dto)
@@ -97,21 +97,9 @@ export class ProductService {
 				category: {
 					slug: categorySlug
 				}
-			}
-		})
-
-		if (!products)
-			throw new NotFoundException('Товары для данной категории не найдены')
-
-		return products
-	}
-
-	async bySubcategory(subcategorySlug: string) {
-		const products = await this.prisma.product.findMany({
-			where: {
-				subcategory: {
-					slug: subcategorySlug
-				}
+			},
+			orderBy: {
+				createdAt: "desc",
 			}
 		})
 
@@ -132,11 +120,6 @@ export class ProductService {
 				category: {
 					connect: {
 						id: dto.categoryId
-					}
-				},
-				subcategory: {
-					connect: {
-						id: dto.subcategoryId
 					}
 				},
 				status: dto.status,
@@ -162,17 +145,16 @@ export class ProductService {
 			price,
 			images,
 			categoryId,
-			subcategoryId,
 			status,
 			isDelivery,
 			flowers
 		} = dto
-		
+
 		const existingProduct = await this.prisma.product.findUnique({
 			where: { id },
 			include: { flowers: true }
 		})
-		
+
 		const currentFlowerIds = existingProduct.flowers.map(flower => flower.id)
 		const disconnectFlowerIds = currentFlowerIds.filter(
 			id => !flowers.some(flower => flower.id === id)
@@ -193,11 +175,6 @@ export class ProductService {
 				category: {
 					connect: {
 						id: categoryId
-					}
-				},
-				subcategory: {
-					connect: {
-						id: subcategoryId
 					}
 				},
 				flowers: {

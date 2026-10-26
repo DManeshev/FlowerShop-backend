@@ -19,22 +19,21 @@ model User {
 }
 
 model Product {
-  id            Int               @id @default(autoincrement())
-  createdAt     DateTime          @default(now()) @map("created_at")
-  updatedAt     DateTime          @updatedAt @map("updated_at")
-  name          String
-  slug          String            @unique
-  description   String?
-  price         Int
-  images        String[]
-  status        EnumProductStatus @default(inStock)
-  isDelivery    Boolean           @default(false) @map("is_delivery")
-  categoryId    Int?              @map("category_id")
-  subcategoryId Int?              @map("subcategory_id")
-  orderItems    OrderItem[]
-  category      Category?         @relation(fields: [categoryId], references: [id])
-  subcategory   Subcategory?      @relation(fields: [subcategoryId], references: [id])
-  flowers       Flower[]          @relation("FlowerToProduct")
+  id          Int               @id @default(autoincrement())
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+  name        String
+  slug        String            @unique
+  description String?
+  price       Int
+  images      String[]
+  status      EnumProductStatus @default(inStock)
+  isDelivery  Boolean           @default(false) @map("is_delivery")
+  orderItems  OrderItem[]
+  flowers     Flower[]          @relation("FlowerToProduct")
+
+  categoryId Int?      @map("category_id")
+  category   Category? @relation(fields: [categoryId], references: [id])
 }
 
 model Flower {
@@ -44,23 +43,17 @@ model Flower {
 }
 
 model Category {
-  id            Int           @id @default(autoincrement())
-  createdAt      DateTime     @default(now()) @map("created_at")
-  name          String        @unique
-  slug          String        @unique
-  order         Int
-  products      Product[]
-  subCategories Subcategory[]
-}
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  name      String   @unique
+  slug      String   @unique
+  order     Int
 
-model Subcategory {
-  id         Int       @id @default(autoincrement())
-  name       String    @unique
-  slug       String    @unique
-  order      Int
-  products   Product[]
-  categoryId Int       @map("category_id")
-  category   Category  @relation(fields: [categoryId], references: [id])
+  parentId      Int?       @map("parent_id")
+  category      Category?  @relation("CategoryToSubcategory", fields: [parentId], references: [id], onDelete: SetNull)
+  subcategories Category[] @relation("CategoryToSubcategory")
+
+  products Product[]
 }
 
 model Order {
