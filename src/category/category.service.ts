@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { returnCategoryObject } from './return-category.object'
 import { CategoryDto } from './category.dto'
@@ -53,7 +53,9 @@ export class CategoryService {
 			select: returnCategoryObject
 		})
 
-		if (!category) throw new Error('Категория не найдена')
+		if (!category) {
+			throw new NotFoundException('Категория не найдена')
+		}
 
 		return category
 	}
@@ -64,7 +66,9 @@ export class CategoryService {
 			select: returnCategoryObject
 		})
 
-		if (!category) throw new Error('Категория не найдена')
+		if (!category) {
+			throw new NotFoundException('Категория не найдена')
+		}
 
 		return category
 	}
